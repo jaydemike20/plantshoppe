@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Ruslan+Display&display=swap');
+
+
+
+.navbar-container {
+    width: 100%;
+    height: 7vh;
+    background-color: #3B583C;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+
+.nav-logo h1 {
+    font-family: 'Ruslan Display', cursive;
+    letter-spacing: 2px;    
+    color: #CEDEBD;
+}
+
+
+.nav-links ul{
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-links ul li {
+    list-style: none;
+    margin-left: 30px;
+}
+
+.nav-links ul li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #CEDEBD;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.nav-links ul li a:hover {
+    color: #fff;
+    font-size: 15px;
+}
