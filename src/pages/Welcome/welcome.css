@@ -1,5 +1,6 @@
 .welcomeContainer{
     width: 100%;
+    height: auto;
 }
 
 
@@ -64,29 +65,76 @@
 }
 
 /* shop plants */
-
-
 .welcome-shop {
-    margin-top: 20px;
-    height: 100vh;
-    background-color: #e6e4e4;
-    
+    width: 100%;
+    height: auto;
+
+    padding: 0 10%;
+    background-color: #f1f1f1;
 }
 
-.shop-header {
-    margin: 2% 10%;
-}
 
 .shop-header h2 {
     font-size: 30px;
     font-weight: 800px;
+    padding: 10px;
 }
 
-.shop-cards {
+.welcome-shopbtn {
+    text-align: center;
+}
+
+.welcome-shopbtn button{
+    padding: 10px 100px;
+    margin-bottom: 20px;
+    font-weight: 400;
+    font-size: 16px;
+
+    border-radius: 5px;
+    border: 2px solid #f1f1f1;
+    color: white;
+    background-color: #3B583C;
+    cursor: pointer;
+}
+
+.welcome-shop button:hover{
+    background-color: #f1f1f1;
+    color: #3B583C;
+    border: 1px solid black;
+}
+
+
+/* date */
+.welcome-date {
+    width: 100%;
     height: 80vh;
-    margin: 0px 10%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 
+.shopdate {
+    width: 40%;
+    margin-bottom: 100px;
+    margin-left: 50px;
+    text-align: justify;
 
+}
 
+.shopdate h3{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.shopdate p{
+    font-size: 20px;
+    font-weight: 400;
+    color: gray;
+}
+
+.shop-photo img{
+    width: 600px;
+    transform: rotate(0.10turn);
+}
