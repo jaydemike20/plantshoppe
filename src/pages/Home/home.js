@@ -8,10 +8,33 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import image from '../../images/plant.jpeg'
 import "./home.css"
-
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import axios from '../../plugins/axios'
 
 function Home() {
 
+    const token = useSelector(state => state.auth.token)
+    const [users, setUsers] = useState([]); // State to store user data
+    const [usersinfo, setUsersInfo] = useState([]);
+
+    useEffect(() => {
+        // Fetch user data from the API
+        axios.get('accounts/users/', {
+            headers: {
+                Authorization: `token ${token}`,
+            },
+        })
+        .then((response) => {
+            // Set the retrieved user data in state
+            setUsers(response.data);
+            console.log(response.data)
+
+        })
+        .catch((error) => {
+            console.error('Error fetching user data:', error);
+        });
+    }, [token]);
 
     const handleAddClient = () => {
 
@@ -28,7 +51,35 @@ function Home() {
                 <button>Add Item</button>
                 <button>Delete Item</button>
 
+                <div className='user-container'>
 
+                    <TableContainer component={Paper} className='user-table'>
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>ID</TableCell>
+                                        <TableCell>Last Name</TableCell>
+                                        <TableCell>First Name</TableCell>
+                                        <TableCell>Middle Name</TableCell>
+                                        <TableCell>Username</TableCell>
+                                        <TableCell>Email</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {users.map((user) => (
+                                        <TableRow key={user.id}>
+                                            <TableCell>{user.id}</TableCell>
+                                            <TableCell>{user.last_name}</TableCell>
+                                            <TableCell>{user.first_name}</TableCell>
+                                            <TableCell>{user.middle_name}</TableCell>
+                                            <TableCell>{user.username}</TableCell>
+                                            <TableCell>{user.email}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                </div>
 
 
 

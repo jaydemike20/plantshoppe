@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from '../../images/logo.png';
 import './login.css'; // Import the CSS stylesheet
 import { useDispatch } from "react-redux";
-import { setLogin } from "./authSlice";
+import { setLogin, setToken } from "./authSlice";
 import axios from '../../plugins/axios'
 
 function Login() {
@@ -20,6 +20,7 @@ function Login() {
         .then((response) => {
           const token = response.data.auth_token;
       
+            dispatch(setToken(token));
           // Make a GET request to "accounts/users/me/" using the obtained token
           axios.get("accounts/users/me/", {
             headers: {
