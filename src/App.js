@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="container">
-      <Routes>
+      <Routes basename="/">
         {/* <Route path="/" element={isAuthenticated ? <Navigate to="/" replace /> : <Welcome />} />
         <Route path="/plants" element={isAuthenticated ? <Plants /> : <Navigate to="/" replace />} />
         <Route path="/about" element={isAuthenticated ? <About /> : <Navigate to="/" replace />} />
@@ -26,7 +26,7 @@ function App() {
         <Route path="/plants" element={<Plants />} />
         <Route path="/about" element={<About />} />        
         <Route path="/contact" element={<Contact />} />
-        <Route path="/contact" element={<Login />} />
+        {/* <Route path="/contact" element={<Login />} /> */}
         <Route path="/login" element={isAuthenticated ? <Navigate to="/Home" replace /> : <Login />} />
         <Route path="/home" element={isAuthenticated ? <Home /> : <Navigate to="/" replace />} />
 

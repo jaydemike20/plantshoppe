@@ -6,13 +6,73 @@
 
 .homecontainer {
     width: 100%;
-    height: auto;
+    height: 100vh;
+    padding: 50px 100px;
 
-    text-align: center;
+    background-color: #f1f1f1;
+ 
 }
 
+.home-stocks {
+    width: 80%;
+    line-height: 50px;
+}
 
-.user-container{
+.home-stocks h1{
+    font-size: 30px;
+    letter-spacing: 2px;
+}
+
+.stocks-add {
+    padding: 10px 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 25px ;
+    border: 1px solid white;
+    cursor: pointer;
+    background-color: green;
+    color: #f1f1f1;    
+}
+.stocks-add:hover{
+    color: black;
+    background-color: #f1f1f1;
+    border: 1px solid black;
+}
+
+.stocks-delete {
+    padding: 10px 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 25px ;
+    border: 1px solid white;
+    cursor: pointer;
+    background-color: red;
+    color: #f1f1f1;
+}
+
+.stocks-delete:hover{
+    color: black;
+    background-color: #f1f1f1;
+    border: 1px solid black;
+}
+
+.stocks-container{
     width: 90vw;
 
+}
+
+.btn-edit{
+    padding: 5px;
+    background-color: white;
+    border: 0;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.btn-delete{
+    padding: 5px;
+    background-color: #f1f1f1;
+    border: 0;
+
+    cursor: pointer;
 }

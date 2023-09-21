@@ -28,9 +28,10 @@ function Login() {
             }
           })
           .then(response => {
-
+              console.log(response.data)
             if(response.data.role == "ADMIN"){
                 alert("Welcome to Administrator")
+
                 dispatch(setLogin())
             }else{
                 
@@ -51,7 +52,6 @@ function Login() {
         });
       
 
-        console.log("login")
     }
 
     return (
