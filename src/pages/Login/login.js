@@ -3,18 +3,54 @@ import logo from '../../images/logo.png';
 import './login.css'; // Import the CSS stylesheet
 import { useDispatch } from "react-redux";
 import { setLogin } from "./authSlice";
+import axios from '../../plugins/axios'
 
 function Login() {
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [credentials, setCredentials] = useState({
+        username: 'jaydemike04',
+        password: 'dario100'
+    })
 
     const dispatch = useDispatch()
 
     const handleLogin = () => {
         
+        axios.post("accounts/token/login", credentials)
+        .then((response) => {
+          const token = response.data.auth_token;
+      
+          // Make a GET request to "accounts/users/me/" using the obtained token
+          axios.get("accounts/users/me/", {
+            headers: {
+              "Authorization": `token ${token}`
+            }
+          })
+          .then(response => {
+
+            if(response.data.role == "ADMIN"){
+                alert("Welcome to Administrator")
+                dispatch(setLogin())
+            }else{
+                
+            }
+
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.error("Error making GET request:", error);
+          });
+
+
+
+
+        })
+        .catch(error => {
+          console.error("Error logging in:", error);
+        });
+      
+
         console.log("login")
-        dispatch(setLogin())
     }
 
     return (
@@ -28,10 +64,18 @@ function Login() {
                 <div className="login-form">
                     <form>
                         <label htmlFor="username">Username</label>
-                        <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input type="text" id="username" value={credentials.username} onChange={(e) =>{
+                            setCredentials({
+                                ...credentials, username: e.target.value
+                            })
+                        }} />
 
-                        <label htmlFor="password" value={password} onChange={(e) => setPassword(e.target.value)}>Password</label>
-                        <input type="password" id="password" />
+                        <label htmlFor="password" >Password</label>
+                        <input type="password" id="password" value={credentials.password} onChange={(e) => {
+                            setCredentials({
+                                ...credentials, password: e.target.value
+                            })
+                        }}/>
 
                         <button onClick={handleLogin}>Login</button>
 

@@ -9,9 +9,33 @@ import Paper from '@mui/material/Paper';
 import image from '../../images/plant.jpeg'
 import "./home.css"
 
+
 function Home() {
+
+
+    const handleAddClient = () => {
+
+    }
+
+
+
     return(
         <div className='homecontainer'>
+
+            <div className='home-client'>
+                <h1>Add Client</h1>
+
+                <button>Add Item</button>
+                <button>Delete Item</button>
+
+
+
+
+
+
+            </div>
+
+
             <h1>Stocks</h1>
 
             <div className="button">
