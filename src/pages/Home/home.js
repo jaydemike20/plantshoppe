@@ -36,6 +36,7 @@ function Home() {
 
     const [plantMap, setPlantsMap] = useState([])
 
+    
 
   // Function to add a new item to the list
   const handleAddItem = () => {
@@ -45,32 +46,107 @@ function Home() {
     formData.append('description', plants.description);
     formData.append('stock', plants.stock);
     formData.append('price', plants.price);
-    formData.append('image', imageFile); // Append the image file
 
-    axios.post('stocks/plants/', formData, {
+    // Append the image file if it's not null and not editing
+    if (imageFile && !editItem) {
+        formData.append('image', imageFile);
+    }
+
+    const request = editItem
+        ? axios.put(`stocks/plants/${editItem.id}/`, formData, {
+              headers: {
+                  Authorization: `token ${token}`,
+                  'Content-Type': 'multipart/form-data',
+              },
+          })
+        : axios.post('stocks/plants/', formData, {
+              headers: {
+                  Authorization: `token ${token}`,
+                  'Content-Type': 'multipart/form-data',
+              },
+          });
+
+    request
+        .then((response) => {
+            console.log(response.data);
+            setEditItem(null); // Clear the editing state
+            // Clear input fields and close the modal
+            setPlants({
+                common_name: "",
+                scientific_name: "",
+                description: "",
+                image: null,
+                stock: "",
+                price: "",
+            });
+            setImageFile(null);
+            setIsModalOpen(false);
+            // Reload the data
+            fetchData();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+
+
+const handleDelete = (itemId) => {
+    axios.delete(`stocks/plants/${itemId}/`, {
         headers: {
             Authorization: `token ${token}`,
-            'Content-Type': 'multipart/form-data', // Set the content type to handle file upload
         },
-    }).then(response => {
-        console.log(response.data);
-
-        setPlants({
-            common_name: "",
-            scientific_name: "",
-            description: "",
-            image: null,
-            stock: "",
-            price: "",
-        })
-
-        setImageFile(null)
-        setIsModalOpen(false);
-
-    }).catch(error => {
+    })
+    .then(() => {
+        // Reload the data after successful deletion
+        fetchData();
+    })
+    .catch((error) => {
         console.log(error);
     });
 };
+const fetchData = () => {
+    axios.get('stocks/plants/', {
+        headers: {
+            Authorization: `token ${token}`,
+        },
+    })
+    .then((response) => {
+        setPlantsMap(response.data);
+    })
+    .catch((error) => {
+        console.error('Error fetching data:', error);
+    });
+};
+
+useEffect(() => {
+    // Fetch data when the component mounts
+    fetchData();
+}, []);
+
+
+
+    const [editItem, setEditItem] = useState(null);
+
+    const handleEdit = (item) => {
+        setEditItem(item);
+    
+        // Clear the image if not editing
+        if (!item.id) {
+            setImageFile(null);
+        }
+    
+        // Populate the modal with the item's data
+        setPlants({
+            common_name: item.common_name,
+            scientific_name: item.scientific_name,
+            description: item.description,
+            stock: item.stock,
+            price: item.price,
+        });
+        setIsModalOpen(true); // Open the modal
+    };
+    
 
   // Function to open the modal for adding items
   const openModal = () => {
@@ -110,48 +186,6 @@ function Home() {
     return(
         <div className='homecontainer'>
 
-            {/* <div className='home-client'>
-                
-                <h1>Add Client</h1>
-
-                <button className='user-add'>Add Item</button>
-                <button className='user-delete'>Delete Item</button>
-
-                <div className='user-container'>
-
-                    <TableContainer component={Paper} className='user-table'>
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>ID</TableCell>
-                                        <TableCell>Last Name</TableCell>
-                                        <TableCell>First Name</TableCell>
-                                        <TableCell>Middle Name</TableCell>
-                                        <TableCell>Username</TableCell>
-                                        <TableCell>Email</TableCell>
-                                        <TableCell>Action</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {users.map((user) => (
-                                        <TableRow key={user.id}>
-                                            <TableCell>{user.id}</TableCell>
-                                            <TableCell>{user.last_name}</TableCell>
-                                            <TableCell>{user.first_name}</TableCell>
-                                            <TableCell>{user.middle_name}</TableCell>
-                                            <TableCell>{user.username}</TableCell>
-                                            <TableCell>{user.email}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                </div>
-
-
-
-
-            </div> */}
 
             <div className='home-stocks'>
                 
@@ -189,8 +223,8 @@ function Home() {
                                             <TableCell>{plant.price}</TableCell>
                                             <TableCell>{plant.uploaded_date}</TableCell>
                                             <TableCell>
-                                                    <button title='edit' className='btn-edit'><img src={Edit} width="20px"/></button>
-                                                    <button title='delete' className='btn-delete'><img src={Delete} width="20px"/></button>
+                                                    <button title='edit' className='btn-edit' onClick={() => handleEdit(plant)}><img src={Edit} width="20px"/></button>
+                                                    <button title='delete' className='btn-delete' onClick={() => handleDelete(plant.id)}><img src={Delete} width="20px"/></button>
                                                 </TableCell>                                            
                                         </TableRow>
                                     ))}
