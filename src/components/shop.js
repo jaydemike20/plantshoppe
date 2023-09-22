@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import image1 from '../images/plants/image1.png'
 import './shop.css'
 import { Card, CardActions, Box, CardContent, Button, Typography, CardMedia } from "@mui/material";
-
+import axios from "../../src/plugins/axios"
 
 const bull = (
     <Box
@@ -13,174 +13,48 @@ const bull = (
     </Box>
   );
 
-function shop() {
+function Shop() {
+
+    const [plants, setPlant] = useState([])
+
+    useEffect(() => {
+
+        axios.get("stocks/plants/").then((response) => {
+            console.log(response.data)
+            setPlant(response.data)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+    }, [])
+
     return(
         <div className="card-container">
-            <Card sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="345"
-                image={image1}
-                
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Lemon Grass
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                ₱ 1000.00
-                </Typography>
-            </CardContent>
-            <CardActions >
-                <Button size="small">Add to Cart</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-            </Card>
-            <Card sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="345"
-                image={image1}
-                
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Lemon Grass
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                ₱ 1000.00
-                </Typography>
-            </CardContent>
-            <CardActions >
-                <Button size="small">Add to Cart</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-            </Card>            <Card sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="345"
-                image={image1}
-                
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Lemon Grass
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                ₱ 1000.00
-                </Typography>
-            </CardContent>
-            <CardActions >
-                <Button size="small">Add to Cart</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-            </Card>            <Card sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="345"
-                image={image1}
-                
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Lemon Grass
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                ₱ 1000.00
-                </Typography>
-            </CardContent>
-            <CardActions >
-                <Button size="small">Add to Cart</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-            </Card>            <Card sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="345"
-                image={image1}
-                
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Lemon Grass
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                ₱ 1000.00
-                </Typography>
-            </CardContent>
-            <CardActions >
-                <Button size="small">Add to Cart</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-            </Card>            <Card sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="345"
-                image={image1}
-                
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Lemon Grass
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                ₱ 1000.00
-                </Typography>
-            </CardContent>
-            <CardActions >
-                <Button size="small">Add to Cart</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-            </Card>            <Card sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="345"
-                image={image1}
-                
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Lemon Grass
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                ₱ 1000.00
-                </Typography>
-            </CardContent>
-            <CardActions >
-                <Button size="small">Add to Cart</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-            </Card>            <Card sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
-            <CardMedia
-                component="img"
-                alt="green iguana"
-                height="345"
-                image={image1}
-                
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                Lemon Grass
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                ₱ 1000.00
-                </Typography>
-            </CardContent>
-            <CardActions >
-                <Button size="small">Add to Cart</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-            </Card>                
+            {plants.map((plant, index) => (
+                <Card key={index} sx={{ maxWidth: 345, maxHeight: 505 }} className="card">
+                <CardMedia
+                    component="img"
+                    alt={plant.common_name} // Set a unique alt text for each plant
+                    height="345"
+                    image={plant.image} // Assuming each plant object has an 'image' property
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                    {plant.common_name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                    ₱ {plant.price}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small">Add to Cart</Button>
+                    <Button size="small">Learn More</Button>
+                </CardActions>
+                </Card>
+            ))}                          
         </div>
     )
 }
 
 
-export default shop;
+export default Shop;

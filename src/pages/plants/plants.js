@@ -1,12 +1,13 @@
 import React from "react";
 import CustomNavbar from "../../components/navbar";
 import Shop from "../../components/shop";
+import './plants.css'
 
 function plants() {
     return(
-        <div>
+        <div className="plants-container">
             <CustomNavbar />
-            <div>
+            <div className="shop-container">
                 <Shop />            
             </div>
         </div>
