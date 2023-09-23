@@ -1,8 +1,9 @@
 import React from "react";
 import CustomNavbar from "../../components/navbar";
 import './contact.css'
-import { Form } from "react-bootstrap";
+import { TextField, Button } from "@mui/material"; // Import Material-UI components
 import Footer from "../../components/footer";
+
 function Contact() {
     return(
         <div className="contact-container">
@@ -10,22 +11,43 @@ function Contact() {
             <div className="contact-content">
                 <h1>Contact Us Here!👋</h1>
 
-                <form>
-                    <label>First Name</label>
-                    <input placeholder="John"></input>
-                    <label>Last Name</label>
-                    <input placeholder="Doe"></input>
-                    <label>Email</label>
-                    <input placeholder="@example.com"></input>
-
-                    <label>Message</label>
-                    <textarea></textarea>
-                    <button>Submit</button>
+                <form className="form-contact">
+                    <TextField
+                        label="First Name"
+                        variant="outlined"
+                        placeholder="John"
+                        fullWidth
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Last Name"
+                        variant="outlined"
+                        placeholder="Doe"
+                        fullWidth
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Email"
+                        variant="outlined"
+                        placeholder="@example.com"
+                        fullWidth
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Message"
+                        variant="outlined"
+                        multiline
+                        rows={4}
+                        fullWidth
+                        margin="normal"
+                    />
+                    <Button variant="contained" color="primary">
+                        Submit
+                    </Button>
                 </form>
             </div>
 
             <Footer />
-
         </div>
     )
 }
